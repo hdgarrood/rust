@@ -107,6 +107,10 @@ else
   $(info cfg: enabling more debugging (CFG_ENABLE_DEBUG))
   CFG_RUSTC_FLAGS += --cfg debug
   CFG_GCCISH_CFLAGS += -DRUST_DEBUG
+  # NOTE: after stage0, move these up into CFG_RUSTC_FLAGS
+  RUSTFLAGS_STAGE1 += -g
+  RUSTFLAGS_STAGE2 += -g
+  RUSTFLAGS_STAGE3 += -g
 endif
 
 ifdef SAVE_TEMPS
@@ -141,7 +145,7 @@ endif
 # worry about the distribution of one file (with its native dynamic
 # dependencies)
 RUSTFLAGS_STAGE0 += -Z prefer-dynamic
-RUSTFLAGS_STAGE1 += -Z prefer-dynamic
+RUSTFLAGS_STAGE1 += -C prefer-dynamic
 
 # platform-specific auto-configuration
 include $(CFG_SRC_DIR)mk/platform.mk
